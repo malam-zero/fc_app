@@ -14,20 +14,26 @@ class FortuneCookieViewModel extends ChangeNotifier {
     fetchCookie();
   }
 
+  Fortune? get fortune => cookie?.fortune;
+
   Future<void> fetchCookie() async {
     isLoading = true;
+    error = null;
     notifyListeners();
 
     try {
       cookie = await model.getFortuneCookie();
-      //   print('Article loaded: ${cookie!.fortune.type}');
+    //   print('Article loaded: ${cookie!.fortune.type}');
       error = null;
     } on HttpException catch (e) {
       error = e;
       cookie = null;
+    } catch (e, st) {
+      error = Exception('$e');
+      cookie = null;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
-
-    isLoading = false;
-    notifyListeners();
   }
 }

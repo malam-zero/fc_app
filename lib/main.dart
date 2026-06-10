@@ -1,3 +1,4 @@
+import 'package:fc_app/views/fortune_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,17 +10,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final viewModel = FortuneCookieViewModel(FortuneCookieModel());
-    // print("here at main.app");
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Fortune Cookie App'),
-          centerTitle: true,
-          backgroundColor: Color(0xF80C8F68),
-        ),
-        body: const Center(child: Text('Check Console for data check')),
-      ),
-    );
+    return MaterialApp(home: FortuneView());
   }
 }
