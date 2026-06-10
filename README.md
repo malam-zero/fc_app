@@ -46,11 +46,20 @@ The app uses `http` to request data from:
 https://api.apiverve.com/v1/fortunecookie
 ```
 
-The request includes an API key header:
+The request includes an API key loaded from an environment file:
 
 ```dart
-headers: {'x-api-key': 'YOUR_API_KEY'}
+final apiKey = dotenv.env['API_KEY'];
+headers: {'x-api-key': apiKey}
 ```
+
+Create a `.env` file in the project root with your key:
+
+```text
+API_KEY=your_api_key_here
+```
+
+A sample template is available at `.env.example`.
 
 The expected response format is:
 
