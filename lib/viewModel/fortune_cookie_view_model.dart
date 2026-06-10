@@ -28,7 +28,7 @@ class FortuneCookieViewModel extends ChangeNotifier {
     } on HttpException catch (e) {
       error = e;
       cookie = null;
-    } catch (e, st) {
+    } catch (e) {
       error = Exception('$e');
       cookie = null;
     } finally {
