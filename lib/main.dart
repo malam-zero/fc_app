@@ -1,13 +1,25 @@
+import 'package:fc_app/model/fortune_cookie_model.dart';
 import 'package:fc_app/theme/app_theme.dart';
+import 'package:fc_app/viewModel/fortune_cookie_view_model.dart';
 import 'package:fc_app/views/fortune_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  runApp(const MainApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => FortuneCookieViewModel(FortuneCookieModel()),
+        ),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

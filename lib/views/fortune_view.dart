@@ -1,8 +1,9 @@
-import 'package:fc_app/model/fortune_cookie_model.dart';
 import 'package:fc_app/viewModel/fortune_cookie_view_model.dart';
+import 'package:fc_app/views/widgets/error_state.dart';
 import 'package:fc_app/views/widgets/fortune_page.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class FortuneView extends StatefulWidget {
   const FortuneView({super.key});
@@ -12,18 +13,26 @@ class FortuneView extends StatefulWidget {
 }
 
 class _FortuneViewState extends State<FortuneView> {
-  final FortuneCookieViewModel viewModel = FortuneCookieViewModel(
-    FortuneCookieModel(),
-  );
+  //   final FortuneCookieViewModel viewModel = FortuneCookieViewModel(
+  //     FortuneCookieModel(),
+  //   );
 
   @override
   void initState() {
     super.initState();
-    viewModel.fetchFortune();
+
+    // This tells Flutter to run the code AFTER the build process is complete
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<FortuneCookieViewModel>(
+        context,
+        listen: false,
+      ).fetchFortune();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<FortuneCookieViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -34,7 +43,6 @@ class _FortuneViewState extends State<FortuneView> {
             fontSize: 32,
           ),
         ),
-        // backgroundColor: Color(0xFF7DAF79),
       ),
       body: Center(
         child: ListenableBuilder(
@@ -64,13 +72,13 @@ class _FortuneViewState extends State<FortuneView> {
                 ),
               ),
               (_, _, final Exception error) => Center(
-                child: Text("Error: $error"),
+                child: ErrorState(error: error),
               ),
               (_, final fortune?, _) => FortunePage(
                 fortune: fortune,
                 nextFortuneCallback: () => viewModel.fetchFortune(),
               ),
-              _ => const Center(child: Text("Why SomeThing Went South")),
+              _ => const Center(child: Text("Why SomeThing Went South?")),
             };
           },
         ),
