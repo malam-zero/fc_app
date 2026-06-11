@@ -1,5 +1,6 @@
-import 'package:fc_app/fortune_cookie.dart';
+import 'package:fc_app/utils/fortune_cookie.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FortuneWidget extends StatelessWidget {
   const FortuneWidget({super.key, required this.fortune});
@@ -8,16 +9,44 @@ class FortuneWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(fortune.fortune, style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 10),
-          Text(
-            'Type: ${fortune.type}',
-            style: Theme.of(context).textTheme.bodyMedium,
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Center(
+                child: Text(
+                  fortune.fortune,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.snowburstOne(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ),
           ),
+          const SizedBox(height: 10),
+          Badge(
+            label: Text(
+              fortune.type,
+              style: GoogleFonts.bitcountGridDoubleInk(
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            backgroundColor: const Color.fromARGB(113, 52, 65, 61),
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(10),
+          ),
+          //   Text(
+          //     'Type: ${fortune.type}',
+          //     style: Theme.of(context).textTheme.bodyMedium,
+          //   ),
         ],
       ),
     );

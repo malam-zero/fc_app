@@ -18,37 +18,35 @@ class _FortuneViewState extends State<FortuneView> {
   @override
   void initState() {
     super.initState();
-    viewModel.fetchCookie();
+    viewModel.fetchFortune();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Fortune Cookie"), centerTitle: true),
-      body: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
-          return switch ((
-            viewModel.isLoading,
-            viewModel.fortune,
-            viewModel.error,
-          )) {
-            (true, _, _) => const Center(child: CircularProgressIndicator()),
-            (_, _, final Exception error) => Center(
-              child: Text("Error: $error"),
-            ),
-            (_, final fortune?, _) => FortunePage(
-              fortune: fortune,
-              nextForturneCallback: () => viewModel.fetchCookie(),
-            ),
-            _ => const Center(child: Text("Why SomeThing Went South")),
-          };
-        },
+      body: Center(
+        child: ListenableBuilder(
+          listenable: viewModel,
+          builder: (context, child) {
+            return switch ((
+              viewModel.isLoading,
+              viewModel.fortune,
+              viewModel.error,
+            )) {
+              (true, _, _) => const Center(child: CircularProgressIndicator()),
+              (_, _, final Exception error) => Center(
+                child: Text("Error: $error"),
+              ),
+              (_, final fortune?, _) => FortunePage(
+                fortune: fortune,
+                nextFortuneCallback: () => viewModel.fetchFortune(),
+              ),
+              _ => const Center(child: Text("Why SomeThing Went South")),
+            };
+          },
+        ),
       ),
     );
   }
 }
-
-
-
-
