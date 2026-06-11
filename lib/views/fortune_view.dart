@@ -2,7 +2,7 @@ import 'package:fc_app/model/fortune_cookie_model.dart';
 import 'package:fc_app/viewModel/fortune_cookie_view_model.dart';
 import 'package:fc_app/views/widgets/fortune_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class FortuneView extends StatefulWidget {
   const FortuneView({super.key});
@@ -28,14 +28,13 @@ class _FortuneViewState extends State<FortuneView> {
       appBar: AppBar(
         title: Text(
           "Fortune Cookie",
-          style: GoogleFonts.mountainsOfChristmas(
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w600,
             fontSize: 32,
           ),
         ),
-        centerTitle: true,
-        backgroundColor: Color(0xFF7DAF79),
+        // backgroundColor: Color(0xFF7DAF79),
       ),
       body: Center(
         child: ListenableBuilder(
@@ -46,7 +45,24 @@ class _FortuneViewState extends State<FortuneView> {
               viewModel.fortune,
               viewModel.error,
             )) {
-              (true, _, _) => const Center(child: CircularProgressIndicator()),
+              (true, _, _) => Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/animations/cookie_loading.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "Cracking your cookie...",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
               (_, _, final Exception error) => Center(
                 child: Text("Error: $error"),
               ),

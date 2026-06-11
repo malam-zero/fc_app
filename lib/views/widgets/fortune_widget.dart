@@ -14,21 +14,30 @@ class FortuneWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Card(
-            color: Color(0x6FB5C7C2),
+            color: Theme.of(context).colorScheme.surface,
+            elevation: 4,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Center(
-                child: Text(
-                  fortune.fortune,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.snowburstOne(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontWeight: FontWeight.w800,
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.cookie_rounded,
+                    color: Theme.of(context).primaryColor,
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: Text(
+                      fortune.fortune,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -37,12 +46,17 @@ class FortuneWidget extends StatelessWidget {
             label: Text(
               fortune.type,
               style: GoogleFonts.almendra(
-                textStyle: Theme.of(context).textTheme.bodyMedium,
+                textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).primaryColor, // Gold text
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            backgroundColor: const Color(0x6FB5C7C2),
+            backgroundColor: Theme.of(
+              context,
+            ).primaryColor.withValues(alpha: 0.2), // Faded Gold
             alignment: Alignment.center,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
           ),
           //   Text(
           //     'Type: ${fortune.type}',

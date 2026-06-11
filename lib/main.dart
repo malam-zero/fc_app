@@ -1,3 +1,4 @@
+import 'package:fc_app/theme/app_theme.dart';
 import 'package:fc_app/views/fortune_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,6 +15,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: FortuneView());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      home: FortuneView(),
+    );
   }
 }

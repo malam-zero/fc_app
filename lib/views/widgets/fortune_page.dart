@@ -29,15 +29,7 @@ class FortunePage extends StatelessWidget {
           FortuneWidget(fortune: fortune),
           ElevatedButton(
             onPressed: nextFortuneCallback,
-            child: Text(
-              'Next Random Fortune',
-              style: GoogleFonts.imFellEnglishSc(
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-                color: const Color(0xFF2D4931),
-              ),
-            ),
+            child: Text('Next Random Fortune'),
           ),
         ],
       ),
