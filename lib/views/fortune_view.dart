@@ -2,6 +2,7 @@ import 'package:fc_app/model/fortune_cookie_model.dart';
 import 'package:fc_app/viewModel/fortune_cookie_view_model.dart';
 import 'package:fc_app/views/widgets/fortune_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FortuneView extends StatefulWidget {
   const FortuneView({super.key});
@@ -24,7 +25,18 @@ class _FortuneViewState extends State<FortuneView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Fortune Cookie"), centerTitle: true),
+      appBar: AppBar(
+        title: Text(
+          "Fortune Cookie",
+          style: GoogleFonts.mountainsOfChristmas(
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w600,
+            fontSize: 32,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xFF7DAF79),
+      ),
       body: Center(
         child: ListenableBuilder(
           listenable: viewModel,

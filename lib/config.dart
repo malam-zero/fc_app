@@ -1,4 +1,4 @@
 // config.dart
 class AppConfig {
-  static const bool useMockData = true; // <--- CHANGE THIS TO SWITCH
+  static const bool useMockData = false; // <--- CHANGE THIS TO SWITCH
 }

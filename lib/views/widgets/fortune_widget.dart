@@ -14,6 +14,7 @@ class FortuneWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Card(
+            color: Color(0x6FB5C7C2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),
@@ -35,11 +36,11 @@ class FortuneWidget extends StatelessWidget {
           Badge(
             label: Text(
               fortune.type,
-              style: GoogleFonts.bitcountGridDoubleInk(
+              style: GoogleFonts.almendra(
                 textStyle: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
-            backgroundColor: const Color.fromARGB(113, 52, 65, 61),
+            backgroundColor: const Color(0x6FB5C7C2),
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
           ),
