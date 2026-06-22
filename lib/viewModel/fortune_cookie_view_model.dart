@@ -1,41 +1,31 @@
-import 'package:fc_app/config.dart';
-import 'package:fc_app/model/fortune_cookie_model.dart';
 import 'package:fc_app/repositories/fortune_repository.dart';
 import 'package:fc_app/utils/fortune_cookie.dart';
 import 'package:flutter/material.dart';
 
-class FortuneCookieViewModel extends ChangeNotifier {
-  final FortuneCookieModel model;
-  Fortune? fortune;
-  Exception? error;
-  bool isLoading = false;
-  late FortuneRepository _repository;
+class FortuneViewModel extends ChangeNotifier {
+  final FortuneRepository _repository;
+  Fortune? _fortune;
+  Fortune? get fortune => _fortune;
 
-  FortuneCookieViewModel(this.model) {
-    if (AppConfig.useMockData) {
-      _repository = MockFortuneRepository();
-    } else {
-      _repository = ApiFortuneRepository(model);
-    }
-    // fetchFortune();
-  }
+  Exception? _error;
+  Exception? get error => _error;
 
-  //   Fortune? get fortune => cookie?.fortune;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  FortuneViewModel(this._repository);
 
   Future<void> fetchFortune() async {
-    isLoading = true;
-    error = null;
-    notifyListeners(); // Notify that loading has started
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
 
     try {
-      // 3. Assign the result to the class member 'fortune'
-      fortune = await _repository.getFortune();
+      _fortune = await _repository.getFortune();
     } catch (e) {
-      // 4. Handle errors
-      error = Exception(e.toString());
+      _error = e is Exception ? e : Exception(e.toString());
     } finally {
-      // 5. Always stop loading and notify listeners
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }

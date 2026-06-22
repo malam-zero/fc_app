@@ -23,7 +23,7 @@ class _FortuneViewState extends State<FortuneView> {
 
     // This tells Flutter to run the code AFTER the build process is complete
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<FortuneCookieViewModel>(
+      Provider.of<FortuneViewModel>(
         context,
         listen: false,
       ).fetchFortune();
@@ -32,7 +32,7 @@ class _FortuneViewState extends State<FortuneView> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<FortuneCookieViewModel>(context);
+    final viewModel = Provider.of<FortuneViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(

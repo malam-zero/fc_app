@@ -19,12 +19,12 @@ This app follows the **Model-View-ViewModel** pattern to ensure a strict separat
 
 ```mermaid
 graph TD
-    View[FortuneView] -->|Observes| ViewModel[FortuneCookieViewModel]
+    View[FortuneView] -->|Observes| ViewModel[FortuneViewModel]
     ViewModel -->|Requests Data| Repository[FortuneRepository]
-    Repository -->|Fetches| Model[FortuneCookieModel]
-    Model -->|HTTP Request| API[Remote API]
-    API -->|JSON Response| Model
-    Model -->|Fortune Object| Repository
+    Repository -->|Fetches| Service[FortuneApiService]
+    Service -->|HTTP Request| API[Remote API]
+    API -->|JSON Response| Service
+    Service -->|Fortune Object| Repository
     Repository -->|Fortune Object| ViewModel
     ViewModel -->|Notify Listeners| View
 ```
@@ -33,12 +33,13 @@ graph TD
 - **View**: Purely declarative UI. It listens to the ViewModel and renders the state (Loading $\rightarrow$ Fortune $\rightarrow$ Error).
 - **ViewModel**: The "Brain" of the app. It manages the UI state (`isLoading`, `fortune`, `error`) and coordinates data fetching.
 - **Repository**: A mediation layer that abstracts the data source. It allows the app to switch between `ApiFortuneRepository` and `MockFortuneRepository` without affecting the ViewModel.
-- **Model**: Handles the low-level HTTP communication and JSON deserialization.
+- **Service**: Handles the low-level HTTP communication and JSON deserialization.
 
 ## 🛠️ Tech Stack
 
 - **Framework**: [Flutter](https://flutter.dev)
-- **State Management**: [Provider](https://pub.dev/packages/provider) (Dependency Injection & State)
+- **State Management**: [Provider](https://pub.dev/packages/provider) (State & UI Binding)
+- **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) (Service Locator)
 - **Animations**: [Lottie](https://pub.dev/packages/lottie)
 - **Typography**: [Google Fonts](https://pub.dev/packages/google_fonts)
 - **Networking**: [HTTP](https://pub.dev/packages/http)
@@ -75,11 +76,11 @@ lib/
 ├── theme/
 │   └── app_theme.dart          # Global design system (Colors, Fonts, Button styles)
 ├── model/
-│   └── fortune_cookie_model.dart # API communication & JSON parsing
+│   └── fortune_cookie_model.dart # API communication (FortuneApiService)
 ├── repositories/
 │   └── fortune_repository.dart   # Data abstraction (API vs Mock)
 ├── viewModel/
-│   └── fortune_cookie_view_model.dart # Business logic & State management
+│   └── fortune_cookie_view_model.dart # Business logic (FortuneViewModel)
 ├── views/
 │   ├── fortune_view.dart       # Main screen (State-driven)
 │   └── widgets/
@@ -92,7 +93,7 @@ lib/
 
 ## 🌟 Key Engineering Decisions
 
-- **Dependency Injection**: Used `Provider` to inject the ViewModel, removing tight coupling and enabling easier testing.
+- **Dependency Injection**: Used `GetIt` for service location and `Provider` for ViewModel injection, ensuring loose coupling and high testability.
 - **Post-Frame Callbacks**: Implemented `WidgetsBinding.instance.addPostFrameCallback` to prevent "setState() called during build" errors.
 - **Custom Theme**: Centralized all styling in `AppTheme` to ensure visual consistency and easy maintenance.
 - **Error Mapping**: Implemented a dedicated `ErrorState` widget with a retry mechanism to improve User Experience (UX).

@@ -1,4 +1,5 @@
-import 'package:fc_app/model/fortune_cookie_model.dart';
+import 'package:fc_app/di/injection.dart';
+import 'package:fc_app/repositories/fortune_repository.dart';
 import 'package:fc_app/theme/app_theme.dart';
 import 'package:fc_app/viewModel/fortune_cookie_view_model.dart';
 import 'package:fc_app/views/fortune_view.dart';
@@ -9,12 +10,12 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
-
+  setupDependencyInjection();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => FortuneCookieViewModel(FortuneCookieModel()),
+          create: (context) => FortuneViewModel(getIt<FortuneRepository>()),
         ),
       ],
       child: const MainApp(),

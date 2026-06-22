@@ -8,10 +8,7 @@ class ErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<FortuneCookieViewModel>(
-      context,
-      listen: false,
-    );
+    final viewModel = Provider.of<FortuneViewModel>(context, listen: false);
 
     return Center(
       child: Padding(

@@ -1,4 +1,5 @@
 import 'package:fc_app/model/fortune_cookie_model.dart';
+import 'package:fc_app/utils/exceptions.dart';
 import 'package:fc_app/utils/fortune_cookie.dart';
 
 abstract class FortuneRepository {
@@ -6,19 +7,17 @@ abstract class FortuneRepository {
 }
 
 class ApiFortuneRepository implements FortuneRepository {
-  final FortuneCookieModel model;
-  ApiFortuneRepository(this.model);
+  final FortuneApiService apiService;
+  ApiFortuneRepository(this.apiService);
 
   @override
   Future<Fortune> getFortune() async {
-    // Your existing API call logic here
-    // return await apiService.fetchFortune();
     try {
-      final FortuneCookie cookie = await model.getFortuneCookie();
+      final FortuneCookie cookie = await apiService.getFortuneCookie();
       return cookie.fortune;
     } catch (e) {
-      // 3. Rethrow the error so the ViewModel can catch it and show a message to the user
-      rethrow;
+      if (e is FortuneException) rethrow;
+      throw UnexpectedException(e.toString());
     }
   }
 }
